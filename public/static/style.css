@@ -13,3 +13,5 @@ textarea{width:100%;min-height:90px;border:1px solid #ded5e8;border-radius:10px;
 .monthDay.open{background:#fce5ef}.monthDay.hasBookings::after{content:'•';display:block;color:#b83d76;line-height:7px}.monthDay.selected.hasBookings::after{color:white}
 
 .clientCalendarHead{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;gap:8px;margin-top:8px}.clientCalendarHead b{text-align:center;text-transform:capitalize}.clientCalendar button.unavailable{opacity:.25;cursor:not-allowed;background:transparent}.clientCalendar button:disabled{box-shadow:none}.clientCalendar{margin-top:8px}
+
+.telegramAfterBooking{margin-top:16px;padding:16px;border:1px solid #efd5df;border-radius:18px;background:#fff8fb}.telegramAfterBooking .button{display:inline-block;text-decoration:none;margin-top:6px}

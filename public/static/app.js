@@ -44,6 +44,7 @@ $('bookingForm').onsubmit=async e=>{e.preventDefault();if(bookingStep!==3){goToB
  if(!contactValue)throw Error('Вкажіть контакт клієнта');
  const data=await api('/api/bookings',{method:'POST',body:JSON.stringify({service_ids:selectedServiceIds(),day:$('day').value,time:$('slot').value,name:clientName,phone:contactType==='Телефон'?contactValue:'',contact_type:contactType,contact_value:contactValue,source,booking_token:params.get('booking_token'),telegram_init_data:webApp?.initData})});
  message('clientMessage',`✓ Ви записані: ${data.day} о ${data.start}, ${data.service}. Збережіть дату та час.`,true);
+ try{const tg=await api('/api/telegram-link');$('telegramAfterBookingLink').href=tg.url;$('telegramAfterBooking').hidden=false}catch{}
  $('slot').value='';await loadSlots(selectedServiceIds(),$('day').value,'slot');if(webApp?.initData)await loadMyBookings();
  }catch(err){message('clientMessage',err.message);await loadSlots(selectedServiceIds(),$('day').value,'slot')}};
 $('adminToggle').onclick=()=>{$('client').hidden=true;$('admin').hidden=false};
