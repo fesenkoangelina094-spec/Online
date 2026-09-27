@@ -13,9 +13,17 @@ textarea{width:100%;min-height:90px;border:1px solid #ded5e8;border-radius:10px;
 .serviceChoices{max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:14px;background:white;padding:6px}.serviceChoice{display:flex;align-items:flex-start;gap:10px;padding:10px;margin:0;border-bottom:1px solid var(--line);font-weight:500;cursor:pointer}.serviceChoice:last-child{border-bottom:0}.serviceChoice input{width:19px;height:19px;flex:none;accent-color:var(--violet);margin:2px 0 0}.serviceChoice span{line-height:1.4}.recordFilters{display:flex;gap:10px;margin:14px 0}.recordFilters .selected{background:var(--violet);color:white}.primary:hover{background:#bf628c}
 .steps button{border:0;background:none;padding:0;color:inherit;font:inherit;white-space:nowrap;cursor:pointer}.steps button.current{color:var(--violet);font-weight:800}.steps button:focus-visible{outline:2px solid var(--violet);outline-offset:5px}.bookingStage[hidden]{display:none}.bookingNav{display:flex;align-items:stretch;gap:10px;margin-top:25px}.bookingNav .primary,.bookingNav .secondary{margin-top:0}.bookingNav .primary{flex:1}.bookingNav .secondary{flex:none}@media(max-width:390px){.bookingNav{flex-wrap:wrap}.bookingNav .primary{min-width:100%}}
 .monthDay.open{background:#fce5ef}.monthDay.hasBookings::after{content:'•';display:block;color:#b83d76;line-height:7px}.monthDay.selected.hasBookings::after{color:white}
-.monthCalendar .monthDay:not(.open){background:#f1a2c1;color:#4d2140;font-weight:800}
+.monthCalendar .monthDay.open{background:#f3bfd3;color:#4d2140;font-weight:800}
+.monthCalendar .monthDay.dayOff{background:#a9ddba;color:#173e2c;font-weight:800}
 .monthCalendar .monthDay.selected{outline:3px solid #9e476e;outline-offset:-3px}
 .monthCalendar .monthDay.selected.hasBookings::after{color:#7d2853}
+.collapsiblePanel summary{display:flex;justify-content:space-between;align-items:center;list-style:none;cursor:pointer;font-size:23px;font-weight:700;gap:12px}
+.collapsiblePanel summary::-webkit-details-marker{display:none}
+.collapsiblePanel summary span{font-size:28px;color:var(--violet);transition:transform .2s}
+.collapsiblePanel[open] summary span{transform:rotate(180deg)}
+.collapsiblePanel[open] summary{margin-bottom:15px}
+.busyInterval label{flex:1;min-width:0;margin:0;font-size:12px}
+.busyInterval label input{margin-top:5px}
 
 .clientCalendarHead{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;gap:8px;margin-top:8px}.clientCalendarHead b{text-align:center;text-transform:capitalize}.clientCalendar button.unavailable{opacity:.25;cursor:not-allowed;background:transparent}.clientCalendar button:disabled{box-shadow:none}.clientCalendar{margin-top:8px}
 
