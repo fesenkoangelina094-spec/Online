@@ -1,0 +1,8 @@
+{
+  "name": "online-zapys",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-09-01",
+  "assets": {"directory": "./public", "binding": "ASSETS"},
+  "d1_databases": [{"binding": "DB", "database_name": "online-zapys", "database_id": "d6bbcd4e-c404-454f-afc0-eefab1697fa6"}],
+  "triggers": {"crons": ["*/15 * * * *"]}
+}
