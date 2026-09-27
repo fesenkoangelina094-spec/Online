@@ -15,3 +15,56 @@ textarea{width:100%;min-height:90px;border:1px solid #ded5e8;border-radius:10px;
 .clientCalendarHead{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;gap:8px;margin-top:8px}.clientCalendarHead b{text-align:center;text-transform:capitalize}.clientCalendar button.unavailable{opacity:.25;cursor:not-allowed;background:transparent}.clientCalendar button:disabled{box-shadow:none}.clientCalendar{margin-top:8px}
 
 .telegramAfterBooking{margin-top:16px;padding:16px;border:1px solid #efd5df;border-radius:18px;background:#fff8fb}.telegramAfterBooking .button{display:inline-block;text-decoration:none;margin-top:6px}
+
+
+/* Stable mobile rendering: iOS/Android, Safari/Chrome, Telegram in-app browser */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;width:100%;overflow-x:hidden}
+body{width:100%;max-width:100%;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,svg,video{max-width:100%}
+button,input,select,textarea{max-width:100%}
+.serviceChoice span,.booking,.muted,#publicInfo,.detail,[role=status]{overflow-wrap:anywhere;word-break:normal}
+
+@media(max-width:800px){
+  header{height:68px;padding-left:16px;padding-right:16px;gap:10px}
+  .brand{font-size:18px;min-width:0}.brand span{font-size:16px;overflow-wrap:anywhere}
+  .ghost,.secondary{padding:11px 14px}
+  main{width:100%;max-width:100%;padding:28px 14px 64px}
+  .layout,.adminGrid{width:100%;min-width:0}
+  .intro{min-width:0;padding:6px 4px}
+  h1{font-size:clamp(38px,12vw,58px);line-height:1.02}
+  .intro p{font-size:16px;line-height:1.55}
+  .panel{width:100%;min-width:0;padding:20px;border-radius:22px}
+  .steps{width:100%;gap:4px;font-size:10px;overflow:hidden}
+  .steps button{min-width:0;white-space:nowrap}
+  label{font-size:13px}
+  input,select,textarea{font-size:16px} /* avoids iOS form-focus zoom */
+  .serviceChoices{max-height:none;width:100%}
+  .serviceChoice{width:100%;min-width:0;padding:11px 8px}
+  .serviceChoice span{min-width:0;font-size:15px;line-height:1.35}
+  .two{min-width:0}
+  .bookingNav{min-width:0}
+  .bookingNav button{min-width:0}
+  .gallery{width:100%;min-height:220px}
+  .gallery img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+  .monthCalendar{min-width:0;gap:3px}
+  .monthCalendar button,.monthCalendar span{min-width:0;padding:7px 1px}
+  .adminHead{gap:12px;min-width:0}
+  .adminHead>div{min-width:0}
+  .categoryTools{min-width:0;flex-wrap:wrap}
+  .categoryTools input{min-width:160px}
+}
+
+@media(max-width:430px){
+  main{padding-left:12px;padding-right:12px}
+  .panel{padding:18px}
+  .steps{font-size:9.5px}
+  .two{grid-template-columns:1fr}
+  .bookingNav{flex-wrap:wrap}
+  .bookingNav .secondary,.bookingNav .primary{width:100%;flex:1 1 100%}
+  .primary{padding:15px 16px}
+  .telegramAfterBooking{padding:14px}
+}
+
+@supports(padding:max(0px)){
+  body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+}
