@@ -39,7 +39,10 @@ $('categoryFilter').onchange=()=>fillPublicServices();
 $('clientPrevMonth').onclick=()=>{clientMonth=shiftMonth(clientMonth,-1);renderClientCalendar()};
 $('clientNextMonth').onclick=()=>{clientMonth=shiftMonth(clientMonth,1);renderClientCalendar()};
 $('bookingForm').onsubmit=async e=>{e.preventDefault();if(bookingStep!==3){goToBookingStep(bookingStep+1);return}if(!selectedServices.size||!$('day').value||!$('slot').value){goToBookingStep(!selectedServices.size?1:2);return}message('clientMessage','Зберігаємо запис…');try{
- if(!selectedServices.size)throw Error('Оберіть хоча б одну послугу');const data=await api('/api/bookings',{method:'POST',body:JSON.stringify({service_ids:selectedServiceIds(),day:$('day').value,time:$('slot').value,name:$('name').value,phone:$('contactType').value==='Телефон'?$('phone').value:'',contact_type:$('contactType').value,contact_value:$('phone').value,source,booking_token:params.get('booking_token'),telegram_init_data:webApp?.initData})});
+ if(!selectedServices.size)throw Error('Оберіть хоча б одну послугу');
+ const form=new FormData(e.currentTarget),contactType=String(form.get('contact_type')||$('contactType').value||'Телефон').trim(),contactValue=String(form.get('contact_value')||$('phone').value||'').trim(),clientName=String(form.get('name')||$('name').value||'').trim();
+ if(!contactValue)throw Error('Вкажіть контакт клієнта');
+ const data=await api('/api/bookings',{method:'POST',body:JSON.stringify({service_ids:selectedServiceIds(),day:$('day').value,time:$('slot').value,name:clientName,phone:contactType==='Телефон'?contactValue:'',contact_type:contactType,contact_value:contactValue,source,booking_token:params.get('booking_token'),telegram_init_data:webApp?.initData})});
  message('clientMessage',`✓ Ви записані: ${data.day} о ${data.start}, ${data.service}. Збережіть дату та час.`,true);
  $('slot').value='';await loadSlots(selectedServiceIds(),$('day').value,'slot');if(webApp?.initData)await loadMyBookings();
  }catch(err){message('clientMessage',err.message);await loadSlots(selectedServiceIds(),$('day').value,'slot')}};
