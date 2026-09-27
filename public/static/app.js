@@ -15,6 +15,14 @@ function fill(select,items,placeholder){select.replaceChildren();option(select,'
 function groupedServices(list){return list.map(s=>({value:s.id,text:`${s.name} — ${s.price} ₴`}))}
 function fillCategories(){const cats=[...new Set(publicServices.map(s=>s.category))].sort();fill($('categoryFilter'),cats.map(x=>({value:x,text:x})),'Усі категорії')}
 function selectedServiceIds(){return [...selectedServices]}
+let bookingStep=1;
+function setBookingStep(step){bookingStep=step;for(let i=1;i<=3;i++)$('bookingStep'+i).hidden=i!==step;document.querySelectorAll('[data-booking-step]').forEach(button=>{const current=Number(button.dataset.bookingStep)===step;button.classList.toggle('current',current);if(current)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current')});message('clientMessage','')}
+function goToBookingStep(step){if(step>1&&!selectedServices.size){message('clientMessage','Спочатку оберіть хоча б одну послугу');return}if(step>2&&(!$('day').value||!$('slot').value)){message('clientMessage','Спочатку оберіть дату та вільний час');return}setBookingStep(step)}
+document.querySelectorAll('[data-booking-step]').forEach(button=>button.onclick=()=>goToBookingStep(Number(button.dataset.bookingStep)));
+$('toBookingStep2').onclick=()=>goToBookingStep(2);
+$('toBookingStep3').onclick=()=>goToBookingStep(3);
+$('backBookingStep1').onclick=()=>goToBookingStep(1);
+$('backBookingStep2').onclick=()=>goToBookingStep(2);
 function updateServiceSelection(){const items=publicServices.filter(s=>selectedServices.has(s.id));const minutes=items.reduce((n,s)=>n+s.minutes,0),price=items.reduce((n,s)=>n+s.price,0);$('serviceDetail').textContent=items.length?`${items.length} послуг · ${Math.floor(minutes/60)} год ${minutes%60} хв · ${price} ₴`:'';loadSlots(selectedServiceIds(),$('day').value,'slot').catch(e=>message('clientMessage',e.message))}
 function fillPublicServices(){const cat=$('categoryFilter').value,box=$('serviceChoices');box.replaceChildren();publicServices.filter(s=>!cat||s.category===cat).forEach(s=>{const label=document.createElement('label');label.className='serviceChoice';const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=selectedServices.has(s.id);checkbox.onchange=()=>{if(checkbox.checked)selectedServices.add(s.id);else selectedServices.delete(s.id);updateServiceSelection()};const text=document.createElement('span');text.textContent=`${s.name} · ${s.minutes} хв · ${s.price} ₴`;label.append(checkbox,text);box.append(label)})}
 function showGallery(){const box=$('gallery');if(!galleryItems.length){box.hidden=true;return}box.hidden=false;const item=galleryItems[galleryIndex%galleryItems.length];$('galleryImage').src=item.url;$('galleryImage').alt=item.caption||'Приклад роботи';const dots=$('galleryDots');dots.replaceChildren();galleryItems.forEach((_,i)=>{const d=document.createElement('span');d.className=i===galleryIndex%galleryItems.length?'active':'';dots.append(d)})}
@@ -26,7 +34,7 @@ async function loadSlots(serviceId,day,target){if(!serviceId||(Array.isArray(ser
  fill($(target),slots.map(x=>({value:x,text:x})),slots.length?'Оберіть час':'Вільного часу немає')}
 $('categoryFilter').onchange=()=>fillPublicServices();
 $('day').onchange=()=>loadSlots(selectedServiceIds(),$('day').value,'slot').catch(e=>message('clientMessage',e.message));
-$('bookingForm').onsubmit=async e=>{e.preventDefault();message('clientMessage','Зберігаємо запис…');try{
+$('bookingForm').onsubmit=async e=>{e.preventDefault();if(bookingStep!==3){goToBookingStep(bookingStep+1);return}if(!selectedServices.size||!$('day').value||!$('slot').value){goToBookingStep(!selectedServices.size?1:2);return}message('clientMessage','Зберігаємо запис…');try{
  if(!selectedServices.size)throw Error('Оберіть хоча б одну послугу');const data=await api('/api/bookings',{method:'POST',body:JSON.stringify({service_ids:selectedServiceIds(),day:$('day').value,time:$('slot').value,name:$('name').value,phone:$('contactType').value==='Телефон'?$('phone').value:'',contact_type:$('contactType').value,contact_value:$('phone').value,source,booking_token:params.get('booking_token'),telegram_init_data:webApp?.initData})});
  message('clientMessage',`✓ Ви записані: ${data.day} о ${data.start}, ${data.service}. Збережіть дату та час.`,true);
  $('slot').value='';await loadSlots(selectedServiceIds(),$('day').value,'slot');if(webApp?.initData)await loadMyBookings();
