@@ -1,4 +1,7 @@
 const $=id=>document.getElementById(id);
+function collapseAdminPanel(panel){const heading=panel.querySelector(':scope > h2');if(!heading)return;const details=document.createElement('details');details.className='collapsiblePanel';const summary=document.createElement('summary');summary.append(document.createTextNode(heading.textContent+' '));const arrow=document.createElement('span');arrow.setAttribute('aria-hidden','true');arrow.textContent='⌄';summary.append(arrow);heading.remove();while(panel.firstChild)details.append(panel.firstChild);details.prepend(summary);panel.append(details)}
+function setupCollapsibleAdmin(){const grids=[...$('adminContent').children].filter(node=>node.classList.contains('adminGrid'));const combined=grids[2]?.children[1];if(combined){let panel=null;for(const child of [...combined.children]){if(child.tagName==='H2'){panel=document.createElement('div');panel.className='panel';combined.before(panel)}if(panel)panel.append(child)}combined.remove()}for(const panel of $('adminContent').querySelectorAll('.adminGrid > .panel, #adminContent > .panel'))collapseAdminPanel(panel)}
+setupCollapsibleAdmin();
 let publicServices=[],adminServices=[],adminCategories=[],galleryItems=[],galleryIndex=0,adminKey='',selectedServices=new Set(),publicDays=[],clientMonth='';
 const params=new URLSearchParams(location.search);
 const source=['telegram','instagram','viber'].includes(params.get('source'))?params.get('source'):'web';
