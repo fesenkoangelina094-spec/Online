@@ -7,7 +7,7 @@
 /* New booking controls and soft pink theme */
 :root{--lav:#fff2f7;--violet:#d77a9f;--line:#f0dce6;--pink:#e9a9c4}
 .gallery{margin-top:28px;border-radius:24px;overflow:hidden;background:var(--lav);border:1px solid var(--line);position:relative;min-height:250px}.gallery img{display:block;width:100%;height:300px;object-fit:cover}.galleryDots{position:absolute;bottom:12px;left:0;right:0;text-align:center}.galleryDots span{display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff8;margin:0 4px}.galleryDots span.active{background:#fff}
-.monthCalendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:12px 0 16px}.monthCalendar button,.monthCalendar span{min-height:35px;border:0;border-radius:8px;background:#fff7fa;text-align:center;padding:8px 2px;color:var(--ink)}.monthCalendar button{cursor:pointer}.monthCalendar button.selected{background:var(--violet);color:#fff}.monthWeekday{font-size:10px;color:var(--muted);font-weight:700}.categoryTools{display:flex;gap:8px;align-items:center}.categoryTools input{flex:1}.categoryTools button{white-space:nowrap}.galleryAdminRow{display:flex;gap:8px;align-items:center;border:1px solid var(--line);padding:7px;border-radius:10px;margin:8px 0}.galleryAdminRow img{width:52px;height:52px;object-fit:cover;border-radius:7px}.galleryAdminRow span{font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis}.galleryAdminRow button{padding:7px 9px;font-size:12px}
+.monthCalendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:12px 0 16px}.monthCalendar > button,.monthCalendar > span{min-height:35px;border:0;border-radius:8px;background:#fff7fa;text-align:center;padding:8px 2px;color:var(--ink)}.monthCalendar button{cursor:pointer}.monthCalendar button.selected{background:var(--violet);color:#fff}.monthWeekday{font-size:10px;color:var(--muted);font-weight:700}.categoryTools{display:flex;gap:8px;align-items:center}.categoryTools input{flex:1}.categoryTools button{white-space:nowrap}.galleryAdminRow{display:flex;gap:8px;align-items:center;border:1px solid var(--line);padding:7px;border-radius:10px;margin:8px 0}.galleryAdminRow img{width:52px;height:52px;object-fit:cover;border-radius:7px}.galleryAdminRow span{font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis}.galleryAdminRow button{padding:7px 9px;font-size:12px}
 
 textarea{width:100%;min-height:90px;border:1px solid #ded5e8;border-radius:10px;padding:12px;font:inherit}.booking button{margin:5px 6px 0 0}
 .serviceChoices{max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:14px;background:white;padding:6px}.serviceChoice{display:flex;align-items:flex-start;gap:10px;padding:10px;margin:0;border-bottom:1px solid var(--line);font-weight:500;cursor:pointer}.serviceChoice:last-child{border-bottom:0}.serviceChoice input{width:19px;height:19px;flex:none;accent-color:var(--violet);margin:2px 0 0}.serviceChoice span{line-height:1.4}.recordFilters{display:flex;gap:10px;margin:14px 0}.recordFilters .selected{background:var(--violet);color:white}.primary:hover{background:#bf628c}
@@ -59,7 +59,7 @@ button,input,select,textarea{max-width:100%}
   .gallery{width:100%;min-height:220px}
   .gallery img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
   .monthCalendar{min-width:0;gap:3px}
-  .monthCalendar button,.monthCalendar span{min-width:0;padding:7px 1px}
+  .monthCalendar > button,.monthCalendar > span{min-width:0;padding:7px 1px}
   .adminHead{gap:12px;min-width:0}
   .adminHead>div{min-width:0}
   .categoryTools{min-width:0;flex-wrap:wrap}
@@ -89,3 +89,31 @@ button,input,select,textarea{max-width:100%}
 .weeklyRow input[type=time]{min-width:0}
 .weeklyRow input:disabled{opacity:.42}
 @media(max-width:430px){.weeklyRow{grid-template-columns:1fr 1fr}.weeklyName{grid-column:1 / -1}}
+
+#adminContent > .adminGrid:first-child{grid-template-columns:minmax(0,1fr)}
+#monthCalendar{gap:3px}
+#monthCalendar .monthDay{display:flex;flex-direction:column;align-items:stretch;gap:3px;text-align:left;min-width:0;min-height:104px;padding:5px 3px;overflow:hidden}
+#monthCalendar .calendarDayNumber{text-align:center;font-weight:800;line-height:1.25}
+#monthCalendar .calendarBooking{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;background:#e2c9ef;border-left:3px solid #a46ac6;color:#271a3a;border-radius:3px;padding:2px 3px;font-size:clamp(9px,2vw,12px);line-height:1.15;font-weight:700}
+#monthCalendar .calendarMore{font-size:10px;color:#714b68;font-weight:800;padding-left:3px}
+#monthCalendar .monthDay.hasBookings::after{content:none}
+.adminMonthNav{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:6px}
+.adminMonthNav .secondary{margin:0;padding:0;height:47px;font-size:24px}
+@media(max-width:430px){#monthCalendar{margin-left:-12px;margin-right:-12px;gap:2px}#monthCalendar .monthDay{min-height:89px;padding:5px 1px;gap:2px}#monthCalendar .calendarBooking{padding:2px 1px;border-left-width:2px;font-size:9px}}
+
+.dayTimeline{margin:18px 0 22px}
+.dayTimelineNav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.dayTimelineNav strong{text-align:center;text-transform:capitalize}
+.dayTimelineNav button{width:42px;height:42px;flex:none;border:1px solid var(--line);border-radius:12px;background:white;color:var(--ink);font:inherit;font-size:27px;cursor:pointer}
+.dayTimelineView{height:min(62vh,600px);min-height:320px;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--line);border-radius:14px;background:white}
+.dayTimelineCanvas{position:relative;margin-left:56px;border-left:1px solid #dce0ec;background:repeating-linear-gradient(to bottom,#fff 0,#fff 35px,#dce0ec 35px,#dce0ec 36px)}
+.dayTimelineHour{position:absolute;left:-53px;width:49px;color:#8c94a9;font-size:11px;line-height:1;transform:translateY(3px)}
+.dayTimelineClosed,.dayTimelineBusy,.dayTimelineBooking{position:absolute;right:0;left:0;box-sizing:border-box;overflow:hidden}
+.dayTimelineClosed{background:rgba(232,234,244,.85);z-index:1;border-top:1px solid #dde1eb}
+.dayTimelineBusy{background:#c6ccd9;color:#263047;z-index:2;border-left:4px solid #929fb6;padding:5px 7px;font-size:12px;font-weight:700}
+.dayTimelineBooking{right:auto;background:#dfc5ef;color:#2f1d40;border-left:5px solid #ad70c8;border-radius:6px;z-index:3;padding:6px 8px;cursor:pointer;min-height:18px}
+.dayTimelineBooking.completed{background:#ebdcf2;border-left-color:#b6a1c6}
+.dayTimelineBooking strong,.dayTimelineBooking small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dayTimelineBooking strong{font-size:14px}.dayTimelineBooking small{font-size:11px;margin-top:3px}
+.dayTimelineBooking:focus-visible{outline:2px solid #8c518d;outline-offset:-2px}
+@media(max-width:430px){.dayTimelineCanvas{margin-left:48px}.dayTimelineHour{left:-46px;width:43px}.dayTimelineBooking{padding:4px 5px}.dayTimelineBooking strong{font-size:12px}.dayTimelineBooking small{font-size:10px}}
